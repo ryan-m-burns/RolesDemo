@@ -10,7 +10,7 @@ namespace RolesDemo.Repositories
     private readonly ApplicationDbContext _context;
     public RoleRepo(ApplicationDbContext context)
     {
-      this._context = context;
+      _context = context;
       CreateInitialRole();
     }
     public List<RoleVM> GetAllRoles()
@@ -58,7 +58,7 @@ namespace RolesDemo.Repositories
       }
       return isSuccess;
     }
-    public void CreateInitialRole()
+    private void CreateInitialRole()
     {
       const string ADMIN = "Admin";
       var role = GetRole(ADMIN);

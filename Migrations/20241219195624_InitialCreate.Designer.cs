@@ -11,7 +11,7 @@ using RolesDemo.Data;
 namespace RolesDemo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241219022016_InitialCreate")]
+    [Migration("20241219195624_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

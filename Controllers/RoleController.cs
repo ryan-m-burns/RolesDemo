@@ -1,14 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using RolesDemo.Repositories;
 using RolesDemo.ViewModels;
+using RolesDemo.Repositories.Interfaces;
+
 namespace RolesDemo.Controllers
 {
   public class RoleController : Controller
   {
     private readonly ILogger<HomeController> _logger;
-    private readonly RoleRepo _roleRepo;
+    private readonly IRoleRepo _roleRepo;
     public RoleController(ILogger<HomeController> logger,
-    RoleRepo roleRepo)
+    IRoleRepo roleRepo)
     {
       _logger = logger;
       _roleRepo = roleRepo;
