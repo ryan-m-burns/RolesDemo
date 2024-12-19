@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 using RolesDemo.Models;
+using RolesDemo.Repositories.Interfaces;
 
 namespace RolesDemo.Areas.Identity.Pages.Account
 {
@@ -24,6 +25,7 @@ namespace RolesDemo.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IMyRegisteredUserRepo _myRegisteredUserRepo;
         private readonly ApplicationDbContext _context;
 
         public RegisterModel(
@@ -32,6 +34,7 @@ namespace RolesDemo.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
+            IMyRegisteredUserRepo myRegisteredUserRepo,
             ApplicationDbContext context)
         {
             _userManager = userManager;
@@ -40,6 +43,7 @@ namespace RolesDemo.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _myRegisteredUserRepo = myRegisteredUserRepo;
             _context = context;
         }
 
@@ -140,8 +144,7 @@ namespace RolesDemo.Areas.Identity.Pages.Account
                         FirstName = Input.FirstName
                     };
 
-                    _context.MyRegisteredUsers.Add(registerUser);
-                    _context.SaveChanges();
+                    _myRegisteredUserRepo.AddUser(registerUser);
 
                     _logger.LogInformation("User created a new account with password.");
 

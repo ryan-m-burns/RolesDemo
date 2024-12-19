@@ -32,6 +32,12 @@ namespace RolesDemo.Controllers
     {
       UserRoleRepo userRoleRepo = new UserRoleRepo(_userManager);
       var roles = await userRoleRepo.GetUserRolesAsync(userName);
+
+      MyRegisteredUserRepo myRegisteredUserRepo = new MyRegisteredUserRepo(_context);
+      var user = myRegisteredUserRepo.GetUser(userName);
+
+
+      ViewBag.UserFirstName = user.FirstName;
       ViewBag.UserName = userName;
       return View(roles);
     }
