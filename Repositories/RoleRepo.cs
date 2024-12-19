@@ -8,9 +8,12 @@ namespace RolesDemo.Repositories
   public class RoleRepo : IRoleRepo
   {
     private readonly ApplicationDbContext _context;
-    public RoleRepo(ApplicationDbContext context)
+
+    private readonly UserManager<IdentityUser> _userManager;
+    public RoleRepo(ApplicationDbContext context, UserManager<IdentityUser> userManager)
     {
       _context = context;
+      _userManager = userManager;
       CreateInitialRole();
     }
     public List<RoleVM> GetAllRoles()
@@ -57,6 +60,37 @@ namespace RolesDemo.Repositories
         isSuccess = false;
       }
       return isSuccess;
+    }
+
+    public async Task<(bool success, string error)> DeleteRole(string roleName)
+    {
+      try
+      {
+        var role = _context.Roles
+          .Where(r => r.Name == roleName)
+          .FirstOrDefault();
+
+        if (role == null)
+        {
+          return (false, "Role not found.");
+        }
+
+        // Check if any users are in this role
+        var usersInRole = await _userManager.GetUsersInRoleAsync(roleName);
+        if (usersInRole.Any())
+        {
+          return (false, $"Cannot delete role '{roleName}' because it is assigned to {usersInRole.Count} user(s).");
+        }
+
+        _context.Roles.Remove(role);
+        await _context.SaveChangesAsync();
+        return (true, string.Empty);
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine($"Error deleting role: {ex.Message}");
+        return (false, $"An error occurred while deleting the role: {ex.Message}");
+      }
     }
     private void CreateInitialRole()
     {

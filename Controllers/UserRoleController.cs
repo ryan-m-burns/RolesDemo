@@ -51,7 +51,7 @@ namespace RolesDemo.Controllers
       // which is their user name.
       ViewBag.SelectedUser = userName;
       // Build SelectList with role data and store in ViewBag.
-      RoleRepo roleRepo = new RoleRepo(_context);
+      RoleRepo roleRepo = new RoleRepo(_context, _userManager);
       var roles = roleRepo.GetAllRoles().ToList();
       // There might be a better way but I have always found using the
       // .NET dropdown lists to be a challenge. Here is a way to make
