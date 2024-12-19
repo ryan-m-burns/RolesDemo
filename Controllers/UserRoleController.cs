@@ -102,5 +102,13 @@ namespace RolesDemo.Controllers
         return View();
       }
     }
+
+    public async Task<IActionResult> Delete(string userName, string roleName)
+    {
+      UserRoleRepo userRoleRepo = new UserRoleRepo(_userManager);
+      var removeUR = await userRoleRepo.RemoveUserRoleAsync(userName
+      , roleName);
+      return RedirectToAction("Detail", "UserRole", new { userName = userName });
+    }
   }
 }

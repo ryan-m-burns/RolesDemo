@@ -12,13 +12,22 @@
   <thead>
     <tr>
       <th>@Html.DisplayNameFor(model => model.RoleName)</th>
+      <th></th>
     </tr>
+
   </thead>
   <tbody>
     @foreach (var item in Model)
     {
       <tr>
         <td>@Html.DisplayFor(modelItem => item.RoleName)</td>
+        <td>
+          <a asp-action="Delete" asp-route-userName="@ViewBag.UserName"
+            asp-route-roleName="@item.RoleName"
+            class="btn btn-sm btn-outline-danger">
+            <i class="fas fa-trash"></i> Delete
+          </a>
+        </td>
       </tr>
     }
   </tbody>
