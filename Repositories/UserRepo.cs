@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using RolesDemo.Data;
 using RolesDemo.ViewModels;
+using RolesDemo.Repositories.Interfaces;
+
 namespace RolesDemo.Repositories
 {
-  public class UserRepo
+  public class UserRepo : IUserRepo
   {
     private readonly ApplicationDbContext _context;
 
