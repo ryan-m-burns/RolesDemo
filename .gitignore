@@ -98,3 +98,5 @@ appsettings.Local.json
 *.swp
 *.swo
 *.*~
+
+.env
